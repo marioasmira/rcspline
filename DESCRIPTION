@@ -2,7 +2,7 @@ Package: rcspline
 Title: Manipulating Restricted Cubic Splines 
 Version: 0.0.0.9000
 Authors@R: 
-    person("Mário", "Sanots Mira", , "marioasmira@gmail.com", role = c("aut", "cre"),
+    person("Mário", "Santos Mira", , "marioasmira@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5185-6851"))
 Description: A package to more easily transform vectors from simulations into non-linear reaction norms.
 License: MIT + file LICENSE
