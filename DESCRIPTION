@@ -1,4 +1,4 @@
-Package: Rsplines
+Package: rcspline
 Title: Manipulating Restricted Cubic Splines 
 Version: 0.0.0.9000
 Authors@R: 
