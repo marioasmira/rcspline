@@ -46,45 +46,45 @@ NumericMatrix make_matrix(
     const double &first_knot = 0.05,
     const double &last_knot = 0.95
     ) {
-  // set the knots
-  NumericVector t = linear_spaced_array(first_knot * max, last_knot * max, k);
-  // set precision intervals
-  NumericVector R = linear_spaced_array(0.0 * max, 1.0 * max, precision);
+    // set the knots
+    NumericVector t = linear_spaced_array(first_knot * max, last_knot * max, k);
+    // set precision intervals
+    NumericVector R = linear_spaced_array(0.0 * max, 1.0 * max, precision);
 
-  // initialize basis matrix M with the correct size and filled with zeros
-  NumericMatrix M(precision, k);
+    // initialize basis matrix M with the correct size and filled with zeros
+    NumericMatrix M(precision, k);
 
-  // populate basis matrix
-  for(size_t i=0; i < precision; ++i){
-      M(i, 0) = 1.0;
-      M(i, 1) = R[i];
-      for (size_t j = 2; j < k; ++j){
-          M(i, j) = cubed(min0(R[i] - t[j-2]));
-          M(i, j) -= cubed(min0(R[i] - t[k - 2])) * (t[k - 1] - t[j-2]) / (t[k - 1] - t[k - 2]);
-          M(i, j) += cubed(min0(R[i] - t[k - 1])) * (t[k - 2] - t[j-2]) / (t[k - 1] - t[k - 2]);
-          M(i, j) /= (t[k - 1] - t[0]) * (t[k - 1] - t[0]);
-      }
-  }
+    // populate basis matrix
+    for(size_t i=0; i < precision; ++i){
+        M(i, 0) = 1.0;
+        M(i, 1) = R[i];
+        for (size_t j = 2; j < k; ++j){
+            M(i, j) = cubed(min0(R[i] - t[j-2]));
+            M(i, j) -= cubed(min0(R[i] - t[k - 2])) * (t[k - 1] - t[j-2]) / (t[k - 1] - t[k - 2]);
+            M(i, j) += cubed(min0(R[i] - t[k - 1])) * (t[k - 2] - t[j-2]) / (t[k - 1] - t[k - 2]);
+            M(i, j) /= (t[k - 1] - t[0]) * (t[k - 1] - t[0]);
+        }
+    }
 
-  const size_t tensor_p = pow(precision, dimensions);
-  const size_t tensor_k = pow(k, dimensions);
+    const size_t tensor_p = pow(precision, dimensions);
+    const size_t tensor_k = pow(k, dimensions);
 	NumericMatrix T(tensor_p, tensor_k);
 
-  // build the T matrix by multiplication
-  for(size_t i = 0; i < tensor_p; ++i){
-      for(size_t j = 0; j < tensor_k; ++j){
-          for(size_t var = 0; var < dimensions; ++var){
-              if(var == 0){
-                  T(i, j) = M(i % precision, j % k);
-              }
-              else{
-                  const size_t scale_i = precision * pow(2, (var - 1));
-                  const size_t scale_j = k * pow(2, (var - 1));
-                  T(i, j) *= M(i / scale_i, j / scale_j);
-              }
-          }
-      }
-  } 
-  return T;
+    // build the T matrix by multiplication
+    for(size_t i = 0; i < tensor_p; ++i){
+        for(size_t j = 0; j < tensor_k; ++j){
+            for(size_t var = 0; var < dimensions; ++var){
+                if(var == 0){
+                    T(i, j) = M(i % precision, j % k);
+                }
+                else{
+                    const size_t scale_i = precision * pow(2, (var - 1));
+                    const size_t scale_j = k * pow(2, (var - 1));
+                    T(i, j) *= M(i / scale_i, j / scale_j);
+                }
+            }
+        }
+    } 
+    return T;
 }
 

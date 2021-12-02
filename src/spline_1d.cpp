@@ -19,9 +19,10 @@ using namespace Rcpp;
 NumericVector spline_1d(
     const NumericVector &vector, const NumericMatrix &matrix
     ) {
-  NumericVector y(matrix.nrow());
-  for (int i = 0; i < matrix.nrow(); i++) {
-    y[i] <- std::inner_product(matrix(i, _ ).begin(), matrix(i, _).end(), vector.begin(), 0.0);
-  }
-  return y;
+    NumericVector y(matrix.nrow());
+    for (int i = 0; i < matrix.nrow(); i++) {
+        NumericVector v = matrix(i, _ );
+        y[i] = std::inner_product(v.begin(), v.end(), vector.begin(), 0.0);
+    }
+    return y;
 }
