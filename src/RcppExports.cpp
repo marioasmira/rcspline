@@ -26,9 +26,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// spline_1d
+NumericVector spline_1d(const NumericVector& vector, const NumericMatrix& matrix);
+RcppExport SEXP _rcspline_spline_1d(SEXP vectorSEXP, SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type vector(vectorSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type matrix(matrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(spline_1d(vector, matrix));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcspline_make_matrix", (DL_FUNC) &_rcspline_make_matrix, 6},
+    {"_rcspline_spline_1d", (DL_FUNC) &_rcspline_spline_1d, 2},
     {NULL, NULL, 0}
 };
 

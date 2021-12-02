@@ -1,25 +1,3 @@
-#' A function that takes a vector and compatable matrix and
-#' returns a restricted cubic spline
-#'
-#' @param vector A vector
-#' @param matrix The M matrix to calculate the restricted cubic spline;
-#' number of columns should be the same as the length of the vector
-#' @return Vector with the sline values; length is the same as the number
-#' of rows in matrix
-#' @examples
-#' M <- make_matrix(1000, 5)
-#' spline_1d(v, M)
-#' @export
-spline_1d <- function(
-    vector, matrix
-    ) {
-  y <- double(length = nrow(matrix))
-  for (i in 1:precision) {
-    y[i] <- as.numeric(matrix[i, ] %*% t(vector))
-  }
-  return(y)
-}
-
 
 #' A function that takes a vector and compatable matrix and
 #' returns a 2 dimensional restricted cubic spline
