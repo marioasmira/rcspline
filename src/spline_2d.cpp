@@ -13,6 +13,7 @@ using namespace Rcpp;
 //' @return Vector with the sline values; length is the same as the number
 //' of rows in matrix
 //' @examples
+//' v <- runif(25)
 //' M <- make_matrix(1000, 5, 2)
 //' spline_2d(v, M)
 //' @export

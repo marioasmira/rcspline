@@ -22,6 +22,7 @@ A function that takes a vector and compatable matrix and
 returns a restricted cubic spline
 }
 \examples{
+v <- runif(5)
 M <- make_matrix(1000, 5)
 spline_1d(v, M)
 }
