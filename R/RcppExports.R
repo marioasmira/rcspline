@@ -9,6 +9,7 @@
 #' @param k the number of knots used
 #' @param dimensions the number of dimentions to create
 #' (this grows the size VERY fast)
+#' @param min the minimum value of the x values; default = 0
 #' @param max the maximum value of the x values; default = 1
 #' @param first_knot position of the first knot; default = 0.05 * max
 #' @param last_knot position of the last knot; default = 0.95 * max
@@ -16,8 +17,8 @@
 #' @examples
 #' make_matrix(1000, 5)
 #' @export
-make_matrix <- function(precision, k, dimensions = 1L, max = 1, first_knot = 0.05, last_knot = 0.95) {
-    .Call(`_rcspline_make_matrix`, precision, k, dimensions, max, first_knot, last_knot)
+make_matrix <- function(precision, k, dimensions = 1L, min = 0, max = 1, first_knot = 0.05, last_knot = 0.95) {
+    .Call(`_rcspline_make_matrix`, precision, k, dimensions, min, max, first_knot, last_knot)
 }
 
 #' A function that takes a vector and compatable matrix and
@@ -29,6 +30,7 @@ make_matrix <- function(precision, k, dimensions = 1L, max = 1, first_knot = 0.0
 #' @return Vector with the spline values; length is the same as the number
 #' of rows in matrix
 #' @examples
+#' v <- runif(5)
 #' M <- make_matrix(1000, 5)
 #' spline_1d(v, M)
 #' @export
@@ -45,6 +47,7 @@ spline_1d <- function(vector, matrix) {
 #' @return Vector with the sline values; length is the same as the number
 #' of rows in matrix
 #' @examples
+#' v <- runif(25)
 #' M <- make_matrix(1000, 5, 2)
 #' spline_2d(v, M)
 #' @export

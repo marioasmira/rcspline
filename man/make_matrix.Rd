@@ -9,6 +9,7 @@ make_matrix(
   precision,
   k,
   dimensions = 1L,
+  min = 0,
   max = 1,
   first_knot = 0.05,
   last_knot = 0.95
@@ -22,6 +23,8 @@ it will the be the number of rows in the output}
 
 \item{dimensions}{the number of dimentions to create
 (this grows the size VERY fast)}
+
+\item{min}{the minimum value of the x values; default = 0}
 
 \item{max}{the maximum value of the x values; default = 1}
 
