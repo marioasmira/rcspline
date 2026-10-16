@@ -2,22 +2,30 @@
 % Please edit documentation in R/utils.R
 \name{logis}
 \alias{logis}
-\title{logistic function}
+\title{Logistic function
+Transforms a real value, x, to be between 0 and carrying capacity, max. The
+growth rate, k, specifies the steepness of the slope. The inflection point,
+x_0, specifies the point where the function changes from exponential to
+logarithmic growth.}
 \usage{
 logis(x, max = 1, k = 1, x_0 = 0)
 }
 \arguments{
-\item{x}{the value to transform}
+\item{x}{The value to transform}
 
-\item{max}{the assymptote of the function}
+\item{max}{The asymptote of the function; carrying capacity}
 
-\item{k}{the rate of the function}
+\item{k}{The growth rate of the function}
 
-\item{x_0}{the inflection point}
+\item{x_0}{The inflection point}
 }
 \value{
-returns the transformed value of the input
+Returns the transformed value of the input
 }
 \description{
-logistic function
+Logistic function
+Transforms a real value, x, to be between 0 and carrying capacity, max. The
+growth rate, k, specifies the steepness of the slope. The inflection point,
+x_0, specifies the point where the function changes from exponential to
+logarithmic growth.
 }
