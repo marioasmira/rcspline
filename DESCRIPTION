@@ -1,19 +1,22 @@
 Package: rcspline
-Title: Manipulating Restricted Cubic Splines 
+Title: Manipulating Restricted Cubic Splines
 Version: 0.0.0.9000
 Authors@R: 
     person("Mário", "Santos Mira", , "marioasmira@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5185-6851"))
-Description: A package to more easily transform vectors from simulations into non-linear reaction norms.
+Description: A set of functions to easily simulate or manipulate simulated
+    non-linear reaction norms.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
+URL: https://github.com/marioasmira/rcspline
+BugReports: https://github.com/marioasmira/rcspline/issues
 Imports:
     Rcpp
-Roxygen: list(markdown = TRUE)
+Suggests: 
+    testthat (>= 3.0.0)
 LinkingTo: 
     Rcpp
 Config/roxygen2/version: 8.1.1
-Suggests: 
-    testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
