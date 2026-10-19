@@ -99,8 +99,8 @@ NumericMatrix make_matrix(
         }
         else
         {
-          const size_t scale_i = pow(precision, (var - 1));
-          const size_t scale_j = pow(k, (var - 1));
+          const size_t scale_i = pow(precision, var);
+          const size_t scale_j = pow(k, var);
           T(i, j) *= M((i / scale_i) % precision, (j / scale_j) % k);
         }
       }
