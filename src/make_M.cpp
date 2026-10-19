@@ -46,9 +46,9 @@ T min0(const T &u)
 //' @export
 // [[Rcpp::export]]
 NumericMatrix make_matrix(
-    const int &precision,
-    const int &k,
-    const int &dimensions = 1,
+    const size_t &precision,
+    const size_t &k,
+    const size_t &dimensions = 1,
     const double &min = 0,
     const double &max = 1,
     const double &first_knot = 0.05,
