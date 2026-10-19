@@ -95,7 +95,7 @@ NumericMatrix make_matrix(
         {
           const size_t scale_i = precision * pow(2, (var - 1));
           const size_t scale_j = k * pow(2, (var - 1));
-          T(i, j) *= M(i / scale_i, j / scale_j);
+          T(i, j) *= M((i / scale_i) % precision, (j / scale_j) % k);
         }
       }
     }
