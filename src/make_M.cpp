@@ -38,8 +38,8 @@ T min0(const T &u)
 //' (this grows the size VERY fast)
 //' @param min the minimum value of the x values; default = 0
 //' @param max the maximum value of the x values; default = 1
-//' @param first_knot position of the first knot; default = 0.05 * max
-//' @param last_knot position of the last knot; default = 0.95 * max
+//' @param first_knot position of the first knot as a fraction of max; default = 0.05
+//' @param last_knot position of the last knot as a fraction of max; default = 0.95
 //' @return a matrix of size precision by k
 //' @examples
 //' make_matrix(1000, 5)
@@ -55,7 +55,7 @@ NumericMatrix make_matrix(
     const double &last_knot = 0.95)
 {
   // set the knots
-  NumericVector t = linear_spaced_array(min + 0.05 * (max - min), min + 0.95 * (max - min), k);
+  NumericVector t = linear_spaced_array(min + first_knot * (max - min), min + last_knot * (max - min), s_k);
   // set precision intervals
   NumericVector R = linear_spaced_array(min, max, precision);
 
