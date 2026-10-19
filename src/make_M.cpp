@@ -76,6 +76,12 @@ NumericMatrix make_matrix(
     }
   }
 
+  // return basis matrix if only using one dimension
+  if (dimensions == 1)
+  {
+    return M;
+  }
+  // otherwise continue to make the tensor product
   const size_t tensor_p = pow(precision, dimensions);
   const size_t tensor_k = pow(k, dimensions);
   NumericMatrix T(tensor_p, tensor_k);
