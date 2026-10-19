@@ -46,9 +46,9 @@ T min0(const T &u)
 //' @export
 // [[Rcpp::export]]
 NumericMatrix make_matrix(
-    const int &precision,
-    const int &k,
-    const int &dimensions = 1,
+    const size_t &precision,
+    const size_t &k,
+    const size_t &dimensions = 1,
     const double &min = 0,
     const double &max = 1,
     const double &first_knot = 0.05,
@@ -76,6 +76,12 @@ NumericMatrix make_matrix(
     }
   }
 
+  // return basis matrix if only using one dimension
+  if (dimensions == 1)
+  {
+    return M;
+  }
+  // otherwise continue to make the tensor product
   const size_t tensor_p = pow(precision, dimensions);
   const size_t tensor_k = pow(k, dimensions);
   NumericMatrix T(tensor_p, tensor_k);
@@ -93,9 +99,9 @@ NumericMatrix make_matrix(
         }
         else
         {
-          const size_t scale_i = precision * pow(2, (var - 1));
-          const size_t scale_j = k * pow(2, (var - 1));
-          T(i, j) *= M(i / scale_i, j / scale_j);
+          const size_t scale_i = pow(precision, var);
+          const size_t scale_j = pow(k, var);
+          T(i, j) *= M((i / scale_i) % precision, (j / scale_j) % k);
         }
       }
     }
