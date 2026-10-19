@@ -11,14 +11,14 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // make_matrix
-NumericMatrix make_matrix(const size_t& precision, const size_t& k, const size_t& dimensions, const double& min, const double& max, const double& first_knot, const double& last_knot);
+NumericMatrix make_matrix(const int& precision, const int& k, const int& dimensions, const double& min, const double& max, const double& first_knot, const double& last_knot);
 RcppExport SEXP _rcspline_make_matrix(SEXP precisionSEXP, SEXP kSEXP, SEXP dimensionsSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP first_knotSEXP, SEXP last_knotSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const size_t& >::type precision(precisionSEXP);
-    Rcpp::traits::input_parameter< const size_t& >::type k(kSEXP);
-    Rcpp::traits::input_parameter< const size_t& >::type dimensions(dimensionsSEXP);
+    Rcpp::traits::input_parameter< const int& >::type precision(precisionSEXP);
+    Rcpp::traits::input_parameter< const int& >::type k(kSEXP);
+    Rcpp::traits::input_parameter< const int& >::type dimensions(dimensionsSEXP);
     Rcpp::traits::input_parameter< const double& >::type min(minSEXP);
     Rcpp::traits::input_parameter< const double& >::type max(maxSEXP);
     Rcpp::traits::input_parameter< const double& >::type first_knot(first_knotSEXP);
