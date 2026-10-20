@@ -5,6 +5,9 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/marioasmira/rcspline/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/marioasmira/rcspline/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/marioasmira/rcspline/graph/badge.svg)](https://app.codecov.io/gh/marioasmira/rcspline)
 <!-- badges: end -->
 
 A simple R package to calculate restricted cubic splines.
