@@ -2,7 +2,8 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' Function to make a vector of values with specific starting and ends points,
-#' and length
+#' and length. Behaviour in R should be similar to seq(). Used only in C++ code
+#' and package tests.
 #'
 #' @param a Lowest value
 #' @param b Highest value
@@ -14,6 +15,23 @@
 #' linear_spaced_array(0.05, 0.95, 5)
 linear_spaced_array <- function(a, b, k) {
     .Call(`_rcspline_linear_spaced_array`, a, b, k)
+}
+
+#' Basis function implemented from Harrell, F. (2001). Regression Modeling
+#' Strategies: With Applications to Linear Models, Logistic Regression, and
+#' Survival Analysis. Springer-Verlag.
+#' https://www.springer.com/gp/book/9781441929181
+#' Used internally and for tests.
+#'
+#' @param R_i ith member of the precision vector (row)
+#' @param t Knots vector
+#' @param j Position to calculate the basis starting at zero (column);
+#' different from the source implementation since here it varies between 2 and
+#' k, instead of between 1 and k-1
+#' @return The calculated basis function for the provided member of the
+#' precision vector (R_i) and the specified column (j)
+basis <- function(R_i, t, j) {
+    .Call(`_rcspline_basis`, R_i, t, j)
 }
 
 #' A function to create an M matrix to help with

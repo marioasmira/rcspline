@@ -2,7 +2,8 @@
 using namespace Rcpp;
 
 //' Function to make a vector of values with specific starting and ends points,
-//' and length
+//' and length. Behaviour in R should be similar to seq(). Used only in C++ code
+//' and package tests.
 //'
 //' @param a Lowest value
 //' @param b Highest value
@@ -39,6 +40,37 @@ T min0(const T &u)
   else
     return 0.0;
 }
+
+//' Basis function implemented from Harrell, F. (2001). Regression Modeling
+//' Strategies: With Applications to Linear Models, Logistic Regression, and
+//' Survival Analysis. Springer-Verlag.
+//' https://www.springer.com/gp/book/9781441929181
+//' Used internally and for tests.
+//'
+//' @param R_i ith member of the precision vector (row)
+//' @param t Knots vector
+//' @param j Position to calculate the basis starting at zero (column);
+//' different from the source implementation since here it varies between 2 and
+//' k, instead of between 1 and k-1
+//' @return The calculated basis function for the provided member of the
+//' precision vector (R_i) and the specified column (j)
+// [[Rcpp::export]]
+double basis(
+  const double &R_i,
+  const NumericVector &t,
+  const size_t &j
+)
+{
+  const size_t k = t.length();
+  double calc = 0.0;
+  calc = cubed(min0(R_i - t[j - 2]));
+  calc -= cubed(min0(R_i - t[k - 2])) * (t[k - 1] - t[j - 2]) / (t[k - 1] - t[k - 2]);
+  calc += cubed(min0(R_i - t[k - 1])) * (t[k - 2] - t[j - 2]) / (t[k - 1] - t[k - 2]);
+  calc /= (t[k - 1] - t[0]) * (t[k - 1] - t[0]);
+  return calc;
+}
+
+
 //' A function to create an M matrix to help with
 //' restricted cubic spline calculations
 //'
@@ -101,10 +133,7 @@ NumericMatrix make_matrix(
     M(i, 1) = R[i];
     for (size_t j = 2; j < s_k; ++j)
     {
-      M(i, j) = cubed(min0(R[i] - t[j - 2]));
-      M(i, j) -= cubed(min0(R[i] - t[s_k - 2])) * (t[s_k - 1] - t[j - 2]) / (t[s_k - 1] - t[s_k - 2]);
-      M(i, j) += cubed(min0(R[i] - t[s_k - 1])) * (t[s_k - 2] - t[j - 2]) / (t[s_k - 1] - t[s_k - 2]);
-      M(i, j) /= (t[s_k - 1] - t[0]) * (t[s_k - 1] - t[0]);
+      M(i, j) = basis(R[i], t, j);
     }
   }
 

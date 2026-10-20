@@ -3,7 +3,8 @@
 \name{linear_spaced_array}
 \alias{linear_spaced_array}
 \title{Function to make a vector of values with specific starting and ends points,
-and length}
+and length. Behaviour in R should be similar to seq(). Used only in C++ code
+and package tests.}
 \usage{
 linear_spaced_array(a, b, k)
 }
@@ -21,7 +22,8 @@ k
 }
 \description{
 Function to make a vector of values with specific starting and ends points,
-and length
+and length. Behaviour in R should be similar to seq(). Used only in C++ code
+and package tests.
 }
 \examples{
 linear_spaced_array(0.05, 0.95, 5)
