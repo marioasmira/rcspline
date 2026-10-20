@@ -41,7 +41,7 @@ library(rcspline)
 library(ggplot2)
 
 p <- 100
-knots = 5
+knots <- 5
 
 m1 <- make_matrix(
   precision = p,
@@ -66,7 +66,7 @@ plot_reac_norm <- data.frame(
 ggplot(
   data = plot_reac_norm,
   aes(x = env, y = pheno)
-  ) +
+) +
   geom_line()
 ```
 

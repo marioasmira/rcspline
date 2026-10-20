@@ -31,7 +31,7 @@ test_that("negative values throw errors", {
   expect_error(make_matrix(10, 5, 1, first_knot = -2, last_knot = -1), "Function not defined for negative values.", fixed = TRUE)
 })
 
-test_that("linear_spaced_array() behaves like seq()",{
+test_that("linear_spaced_array() behaves like seq()", {
   expect_equal(linear_spaced_array(0, 15, 5)[2], seq(0, 15, length.out = 5)[2])
   expect_equal(linear_spaced_array(-10, 15, 9)[7], seq(-10, 15, length.out = 9)[7])
   expect_equal(linear_spaced_array(-20, 0, 5)[3], seq(-20, 0, length.out = 5)[3])
@@ -61,10 +61,10 @@ test_that("specific values in the matrix are correct", {
       2 # note the different column number (here it should start at 0)
     ) *
       basis( # env 2
-      linear_spaced_array(0, 1, 100)[33],
-      linear_spaced_array(0.05, 0.95, 5),
-      3 # note the different column number (here it should start at 0)
-    ),
+        linear_spaced_array(0, 1, 100)[33],
+        linear_spaced_array(0.05, 0.95, 5),
+        3 # note the different column number (here it should start at 0)
+      ),
     make_matrix(100, 5, dimensions = 2)[33 + 100 * (43 - 1), 4 + 5 * (3 - 1)] # column value starts at 1
   )
   expect_equal(
@@ -74,10 +74,10 @@ test_that("specific values in the matrix are correct", {
       1 # note the different column number (here it should start at 0)
     ) *
       basis( # env 2
-      linear_spaced_array(0, 7, 100)[27],
-      linear_spaced_array(0.05 * 7, 0.95 * 7, 5), # notice scaling knots
-      3 # note the different column number (here it should start at 0)
-    ),
+        linear_spaced_array(0, 7, 100)[27],
+        linear_spaced_array(0.05 * 7, 0.95 * 7, 5), # notice scaling knots
+        3 # note the different column number (here it should start at 0)
+      ),
     make_matrix(100, 5, dimensions = 2, max = 7)[27 + 100 * (92 - 1), 4 + 5 * (2 - 1)] # column value starts at 1
   )
 })
