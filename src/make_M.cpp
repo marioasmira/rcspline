@@ -1,5 +1,8 @@
+// Copyright 2026 'rcspline' authors. See repository licence in LICENSE.md.
 #include <Rcpp.h>
-using namespace Rcpp;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
+using Rcpp::stop;
 
 //' Function to make a vector of values with specific starting and ends points,
 //' and length. Behaviour in R should be similar to seq(). Used only in C++ code
@@ -12,27 +15,21 @@ using namespace Rcpp;
 //' respectively, with other members evenly spaced between them and a length of
 //' k
 // [[Rcpp::export]]
-NumericVector linear_spaced_array(double a, double b, size_t k)
-{
+NumericVector linear_spaced_array(double a, double b, size_t k) {
   double h = (b - a) / (k - 1);
   NumericVector xs(k);
   double val = a;
-  for (size_t i = 0; i < k; ++i, val += h)
-  {
+  for (size_t i = 0; i < k; ++i, val += h) {
     xs[i] = val;
   }
   return xs;
 }
 // cube expression
-double cubed(const double &exp)
-{
-  return exp * exp * exp;
-}
+double cubed(const double &exp) { return exp * exp * exp; }
 // calculate (x)+
 // return x if positive and 0 if negative
 template <typename T>
-T min0(const T &u)
-{
+T min0(const T &u) {
   if (u > 0.0)
     return u;
   else
@@ -53,21 +50,17 @@ T min0(const T &u)
 //' @return The calculated basis function for the provided member of the
 //' precision vector (R_i) and the specified column (j)
 // [[Rcpp::export]]
-double basis(
-  const double &R_i,
-  const NumericVector &t,
-  const size_t &j
-)
-{
+double basis(const double &R_i, const NumericVector &t, const size_t &j) {
   const size_t k = t.length();
   double calc = 0.0;
   calc = cubed(min0(R_i - t[j - 2]));
-  calc -= cubed(min0(R_i - t[k - 2])) * (t[k - 1] - t[j - 2]) / (t[k - 1] - t[k - 2]);
-  calc += cubed(min0(R_i - t[k - 1])) * (t[k - 2] - t[j - 2]) / (t[k - 1] - t[k - 2]);
+  calc -= cubed(min0(R_i - t[k - 2])) * (t[k - 1] - t[j - 2]) /
+          (t[k - 1] - t[k - 2]);
+  calc += cubed(min0(R_i - t[k - 1])) * (t[k - 2] - t[j - 2]) /
+          (t[k - 1] - t[k - 2]);
   calc /= (t[k - 1] - t[0]) * (t[k - 1] - t[0]);
   return calc;
 }
-
 
 //' A function to create an M matrix to help with
 //' restricted cubic spline calculations
@@ -79,26 +72,25 @@ double basis(
 //' (this grows the size VERY fast)
 //' @param min the minimum value of the x values; default = 0
 //' @param max the maximum value of the x values; default = 1
-//' @param first_knot position of the first knot as a fraction of max; default = 0.05
-//' @param last_knot position of the last knot as a fraction of max; default = 0.95
+//' @param first_knot position of the first knot as a fraction of max;
+//' default = 0.05
+//' @param last_knot position of the last knot as a fraction of max;
+//' default = 0.95
 //' @return a matrix of size precision by k
 //' @examples
 //' make_matrix(1000, 5)
 //' @export
 // [[Rcpp::export]]
-NumericMatrix make_matrix(
-    const int &precision,
-    const int &k,
-    const int &dimensions = 1,
-    const double &min = 0,
-    const double &max = 1,
-    const double &first_knot = 0.05,
-    const double &last_knot = 0.95)
-{
+NumericMatrix make_matrix(const int &precision, const int &k,
+                          const int &dimensions = 1, const double &min = 0,
+                          const double &max = 1,
+                          const double &first_knot = 0.05,
+                          const double &last_knot = 0.95) {
   // throw error if parameters are outside of scope
-  if ((precision < 1) || (k < 1) || (dimensions < 1))
-  {
-    stop("Integer parameters (precision, k, and dimensions) should be greater than zero.");
+  if ((precision < 1) || (k < 1) || (dimensions < 1)) {
+    stop(
+        "Integer parameters (precision, k, and dimensions) should be greater "
+        "than zero.");
   }
   // explicit cast into size_t if greater than zero
   const size_t s_precision = static_cast<size_t>(precision);
@@ -106,18 +98,19 @@ NumericMatrix make_matrix(
   const size_t s_dimensions = static_cast<size_t>(dimensions);
 
   // throw error if negative ranges for vectors
-  if ((min > max) || (first_knot > last_knot))
-  {
-    stop("Function not defined for negative ranges (min > max or first_knot > last_knot).");
+  if ((min > max) || (first_knot > last_knot)) {
+    stop(
+        "Function not defined for negative ranges (min > max or first_knot > "
+        "last_knot).");
   }
 
   // throw error if negative values for continuous values
-  if ((min < 0) || (max < 0) || (first_knot < 0) || (last_knot < 0))
-  {
+  if ((min < 0) || (max < 0) || (first_knot < 0) || (last_knot < 0)) {
     stop("Function not defined for negative values.");
   }
   // set the knots
-  NumericVector t = linear_spaced_array(min + first_knot * (max - min), min + last_knot * (max - min), s_k);
+  NumericVector t = linear_spaced_array(min + first_knot * (max - min),
+                                        min + last_knot * (max - min), s_k);
   // set precision intervals
   NumericVector R = linear_spaced_array(min, max, s_precision);
 
@@ -125,19 +118,16 @@ NumericMatrix make_matrix(
   NumericMatrix M(s_precision, s_k);
 
   // populate basis matrix
-  for (size_t i = 0; i < s_precision; ++i)
-  {
+  for (size_t i = 0; i < s_precision; ++i) {
     M(i, 0) = 1.0;
     M(i, 1) = R[i];
-    for (size_t j = 2; j < s_k; ++j)
-    {
+    for (size_t j = 2; j < s_k; ++j) {
       M(i, j) = basis(R[i], t, j);
     }
   }
 
   // return basis matrix if only using one dimension
-  if (s_dimensions == 1)
-  {
+  if (s_dimensions == 1) {
     return M;
   }
   // otherwise continue to make the tensor product
@@ -146,18 +136,12 @@ NumericMatrix make_matrix(
   NumericMatrix T(tensor_p, tensor_k);
 
   // build the T matrix by multiplication
-  for (size_t i = 0; i < tensor_p; ++i)
-  {
-    for (size_t j = 0; j < tensor_k; ++j)
-    {
-      for (size_t var = 0; var < s_dimensions; ++var)
-      {
-        if (var == 0)
-        {
+  for (size_t i = 0; i < tensor_p; ++i) {
+    for (size_t j = 0; j < tensor_k; ++j) {
+      for (size_t var = 0; var < s_dimensions; ++var) {
+        if (var == 0) {
           T(i, j) = M(i % s_precision, j % s_k);
-        }
-        else
-        {
+        } else {
           const size_t scale_i = pow(s_precision, var);
           const size_t scale_j = pow(s_k, var);
           T(i, j) *= M((i / scale_i) % s_precision, (j / scale_j) % s_k);

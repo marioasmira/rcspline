@@ -42,8 +42,10 @@ basis <- function(R_i, t, j) {
 #' (this grows the size VERY fast)
 #' @param min the minimum value of the x values; default = 0
 #' @param max the maximum value of the x values; default = 1
-#' @param first_knot position of the first knot as a fraction of max; default = 0.05
-#' @param last_knot position of the last knot as a fraction of max; default = 0.95
+#' @param first_knot position of the first knot as a fraction of max;
+#' default = 0.05
+#' @param last_knot position of the last knot as a fraction of max;
+#' default = 0.95
 #' @return a matrix of size precision by k
 #' @examples
 #' make_matrix(1000, 5)

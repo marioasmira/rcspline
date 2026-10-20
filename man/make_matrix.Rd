@@ -28,9 +28,11 @@ it will the be the number of rows in the output}
 
 \item{max}{the maximum value of the x values; default = 1}
 
-\item{first_knot}{position of the first knot as a fraction of max; default = 0.05}
+\item{first_knot}{position of the first knot as a fraction of max;
+default = 0.05}
 
-\item{last_knot}{position of the last knot as a fraction of max; default = 0.95}
+\item{last_knot}{position of the last knot as a fraction of max;
+default = 0.95}
 }
 \value{
 a matrix of size precision by k
