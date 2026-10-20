@@ -10,6 +10,19 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// linear_spaced_array
+NumericVector linear_spaced_array(double a, double b, size_t k);
+RcppExport SEXP _rcspline_linear_spaced_array(SEXP aSEXP, SEXP bSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type a(aSEXP);
+    Rcpp::traits::input_parameter< double >::type b(bSEXP);
+    Rcpp::traits::input_parameter< size_t >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(linear_spaced_array(a, b, k));
+    return rcpp_result_gen;
+END_RCPP
+}
 // make_matrix
 NumericMatrix make_matrix(const int& precision, const int& k, const int& dimensions, const double& min, const double& max, const double& first_knot, const double& last_knot);
 RcppExport SEXP _rcspline_make_matrix(SEXP precisionSEXP, SEXP kSEXP, SEXP dimensionsSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP first_knotSEXP, SEXP last_knotSEXP) {
@@ -53,6 +66,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_rcspline_linear_spaced_array", (DL_FUNC) &_rcspline_linear_spaced_array, 3},
     {"_rcspline_make_matrix", (DL_FUNC) &_rcspline_make_matrix, 7},
     {"_rcspline_spline_1d", (DL_FUNC) &_rcspline_spline_1d, 2},
     {"_rcspline_spline_2d", (DL_FUNC) &_rcspline_spline_2d, 2},

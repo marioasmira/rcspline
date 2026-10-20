@@ -1,7 +1,18 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// to make a vector of values depending on the approximation needed
+//' Function to make a vector of values with specific starting and ends points,
+//' and length
+//'
+//' @param a Lowest value
+//' @param b Highest value
+//' @param k Length of the vector desired
+//' @return A vector where the first and last members correspond to a and b,
+//' respectively, with other members evenly spaced between them and a length of
+//' k
+//' @examples
+//' linear_spaced_array(0.05, 0.95, 5)
+// [[Rcpp::export]]
 NumericVector linear_spaced_array(double a, double b, size_t k)
 {
   double h = (b - a) / (k - 1);
