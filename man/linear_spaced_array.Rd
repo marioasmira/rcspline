@@ -25,6 +25,3 @@ Function to make a vector of values with specific starting and ends points,
 and length. Behaviour in R should be similar to seq(). Used only in C++ code
 and package tests.
 }
-\examples{
-linear_spaced_array(0.05, 0.95, 5)
-}

@@ -11,8 +11,6 @@
 #' @return A vector where the first and last members correspond to a and b,
 #' respectively, with other members evenly spaced between them and a length of
 #' k
-#' @examples
-#' linear_spaced_array(0.05, 0.95, 5)
 linear_spaced_array <- function(a, b, k) {
     .Call(`_rcspline_linear_spaced_array`, a, b, k)
 }
