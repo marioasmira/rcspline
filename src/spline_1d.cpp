@@ -1,5 +1,6 @@
 // Copyright 2026 'rcspline' authors. See repository licence in LICENSE.md.
 #include <Rcpp.h>
+// Can't use 'using-declarations' because the Rcpp '_' symbol is used
 using namespace Rcpp;
 
 #include <algorithm>
