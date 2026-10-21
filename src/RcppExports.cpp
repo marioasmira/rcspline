@@ -53,6 +53,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// nspline
+NumericVector nspline(const NumericVector& vector, const NumericMatrix& matrix, const int& dimensions, const int& precision);
+RcppExport SEXP _rcspline_nspline(SEXP vectorSEXP, SEXP matrixSEXP, SEXP dimensionsSEXP, SEXP precisionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type vector(vectorSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< const int& >::type dimensions(dimensionsSEXP);
+    Rcpp::traits::input_parameter< const int& >::type precision(precisionSEXP);
+    rcpp_result_gen = Rcpp::wrap(nspline(vector, matrix, dimensions, precision));
+    return rcpp_result_gen;
+END_RCPP
+}
 // spline_1d
 NumericVector spline_1d(const NumericVector& vector, const NumericMatrix& matrix);
 RcppExport SEXP _rcspline_spline_1d(SEXP vectorSEXP, SEXP matrixSEXP) {
@@ -82,6 +96,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rcspline_linear_spaced_array", (DL_FUNC) &_rcspline_linear_spaced_array, 3},
     {"_rcspline_basis", (DL_FUNC) &_rcspline_basis, 3},
     {"_rcspline_make_matrix", (DL_FUNC) &_rcspline_make_matrix, 7},
+    {"_rcspline_nspline", (DL_FUNC) &_rcspline_nspline, 4},
     {"_rcspline_spline_1d", (DL_FUNC) &_rcspline_spline_1d, 2},
     {"_rcspline_spline_2d", (DL_FUNC) &_rcspline_spline_2d, 2},
     {NULL, NULL, 0}

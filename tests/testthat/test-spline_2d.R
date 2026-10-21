@@ -43,7 +43,7 @@ test_that("function is equal to manual calculations", {
       basis(col, knots, 4)
     )
 
-    # caluclate the tensor of the 1D vectors
+    # calculate the tensor of the 1D vectors
     calc_2d <- numeric(length = k^2)
     for (i in 1:k) {
       for (j in 1:k) {
