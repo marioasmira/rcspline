@@ -55,6 +55,29 @@ make_matrix <- function(precision, k, dimensions = 1L, min = 0, max = 1, first_k
 }
 
 #' A function that takes a vector and compatible matrix and
+#' returns an `n` dimensional restricted cubic spline
+#'
+#' @param vector A vector
+#' @param matrix The M matrix to calculate the restricted cubic spline;
+#' number of columns should be the same as the length of the vector
+#' @param dimensions The number of dimensions in the system
+#' @param precision The precision of the system
+#' @return Vector/matrix with the spline values; the length of the return
+#' object is the same as the precision used to created the matrix; the
+#' dimensions of the object will be the same as the input
+#' @examples
+#' precision <- 100
+#' k <- 5
+#' dimensions <- 2
+#' v <- rnorm(k^2)
+#' M <- make_matrix(precision, k, dimensions)
+#' nspline(v, M, dimensions, precision)
+#' @export
+nspline <- function(vector, matrix, dimensions, precision) {
+    .Call(`_rcspline_nspline`, vector, matrix, dimensions, precision)
+}
+
+#' A function that takes a vector and compatible matrix and
 #' returns a restricted cubic spline
 #'
 #' @param vector A vector

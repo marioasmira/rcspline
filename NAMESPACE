@@ -2,6 +2,7 @@
 
 export(logis)
 export(make_matrix)
+export(nspline)
 export(spline_1d)
 export(spline_2d)
 importFrom(Rcpp,sourceCpp)
