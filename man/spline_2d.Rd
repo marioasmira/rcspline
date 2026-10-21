@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{spline_2d}
 \alias{spline_2d}
-\title{A function that takes a vector and compatable matrix and
+\title{A function that takes a vector and compatible matrix and
 returns a 2 dimensional restricted cubic spline}
 \usage{
 spline_2d(vector, matrix)
@@ -14,11 +14,11 @@ spline_2d(vector, matrix)
 number of columns should be the same as the length of the vector}
 }
 \value{
-Vector with the sline values; length is the same as the number
+Vector with the spline values; length is the same as the number
 of rows in matrix
 }
 \description{
-A function that takes a vector and compatable matrix and
+A function that takes a vector and compatible matrix and
 returns a 2 dimensional restricted cubic spline
 }
 \examples{

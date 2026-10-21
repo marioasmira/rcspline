@@ -5,13 +5,13 @@ using namespace Rcpp;
 
 #include <algorithm>
 
-//' A function that takes a vector and compatable matrix and
+//' A function that takes a vector and compatible matrix and
 //' returns a 2 dimensional restricted cubic spline
 //'
 //' @param vector A vector
 //' @param matrix The M matrix to calculate the restricted cubic spline;
 //' number of columns should be the same as the length of the vector
-//' @return Vector with the sline values; length is the same as the number
+//' @return Vector with the spline values; length is the same as the number
 //' of rows in matrix
 //' @examples
 //' v <- runif(25)

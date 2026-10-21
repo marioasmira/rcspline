@@ -54,7 +54,7 @@ make_matrix <- function(precision, k, dimensions = 1L, min = 0, max = 1, first_k
     .Call(`_rcspline_make_matrix`, precision, k, dimensions, min, max, first_knot, last_knot)
 }
 
-#' A function that takes a vector and compatable matrix and
+#' A function that takes a vector and compatible matrix and
 #' returns a restricted cubic spline
 #'
 #' @param vector A vector
@@ -71,13 +71,13 @@ spline_1d <- function(vector, matrix) {
     .Call(`_rcspline_spline_1d`, vector, matrix)
 }
 
-#' A function that takes a vector and compatable matrix and
+#' A function that takes a vector and compatible matrix and
 #' returns a 2 dimensional restricted cubic spline
 #'
 #' @param vector A vector
 #' @param matrix The M matrix to calculate the restricted cubic spline;
 #' number of columns should be the same as the length of the vector
-#' @return Vector with the sline values; length is the same as the number
+#' @return Vector with the spline values; length is the same as the number
 #' of rows in matrix
 #' @examples
 #' v <- runif(25)

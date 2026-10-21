@@ -30,14 +30,18 @@ test_that("function is equal to manual calculations", {
   x <- seq(0, 1, length.out = precision)
   r_spline_2d <- function(row, col) {
     # make separate 1D vectors
-    calc_1d_row <- c(1, row,
+    calc_1d_row <- c(
+      1, row,
       basis(row, knots, 2), # j argument starts at 0
       basis(row, knots, 3),
-      basis(row, knots, 4))
-    calc_1d_col <- c(1, col,
-                     basis(col, knots, 2), # j argument starts at 0
-                     basis(col, knots, 3),
-                     basis(col, knots, 4))
+      basis(row, knots, 4)
+    )
+    calc_1d_col <- c(
+      1, col,
+      basis(col, knots, 2), # j argument starts at 0
+      basis(col, knots, 3),
+      basis(col, knots, 4)
+    )
 
     # caluclate the tensor of the 1D vectors
     calc_2d <- numeric(length = k^2)

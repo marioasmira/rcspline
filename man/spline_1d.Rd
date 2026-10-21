@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{spline_1d}
 \alias{spline_1d}
-\title{A function that takes a vector and compatable matrix and
+\title{A function that takes a vector and compatible matrix and
 returns a restricted cubic spline}
 \usage{
 spline_1d(vector, matrix)
@@ -18,7 +18,7 @@ Vector with the spline values; length is the same as the number
 of rows in matrix
 }
 \description{
-A function that takes a vector and compatable matrix and
+A function that takes a vector and compatible matrix and
 returns a restricted cubic spline
 }
 \examples{

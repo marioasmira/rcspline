@@ -5,7 +5,7 @@ using namespace Rcpp;
 
 #include <algorithm>
 
-//' A function that takes a vector and compatable matrix and
+//' A function that takes a vector and compatible matrix and
 //' returns a restricted cubic spline
 //'
 //' @param vector A vector
