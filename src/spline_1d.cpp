@@ -1,10 +1,11 @@
 // Copyright 2026 'rcspline' authors. See repository licence in LICENSE.md.
 #include <Rcpp.h>
+// Can't use 'using-declarations' because the Rcpp '_' symbol is used
 using namespace Rcpp;
 
 #include <algorithm>
 
-//' A function that takes a vector and compatable matrix and
+//' A function that takes a vector and compatible matrix and
 //' returns a restricted cubic spline
 //'
 //' @param vector A vector
