@@ -8,6 +8,7 @@
 [![R-CMD-check](https://github.com/marioasmira/rcspline/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/marioasmira/rcspline/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/marioasmira/rcspline/graph/badge.svg)](https://app.codecov.io/gh/marioasmira/rcspline)
+
 <!-- badges: end -->
 
 A simple R package to calculate restricted cubic splines.
@@ -29,35 +30,54 @@ Alternatively, with `devtools`:
 devtools::install_github("marioasmira/rcspline")
 ```
 
-## Example
+## Usage
 
 This package relies on the creation of a matrix object which can be
 repeatedly used with specifically sized vectors to generate non-linear
-reaction norms. For example, to generate a reaction norm with 5 knots
-(`k = 5`) and a precision of 100, we first generate a matrix with:
+reaction norms. The three main variables necessary are:
+
+- `precision`: the granularity with which to represent the environment;
+- `k`: the number of knots used during the calculations. More knots can
+  lead to more complex shapes but also more computation time. A `k = 5`
+  seems to be good enough for the situations I’ve found so far;
+- `dimensions`: the number of environments to study. This package is
+  prepared to deal mostly with positive values of the environment, but
+  transformations can be used to change the interpretation of outcomes.
+
+The functions in this package use these variables to first create the
+pre-calculation matrix (*e.g.*,
+`m <- make_matrix(precision = 100, k = 5, dimensions = 1)`) and then use
+this matrix with a provided (or evolved) vector to calculate the
+reaction norm (*e.g.*,
+`nspline(vector = vec, matrix = m, dimensions = 1, precision = 100)`).
+
+## Example
+
+For example, to generate a reaction norm with 5 knots (`k = 5`) and a
+precision of 100 (`p = 100`), we first generate a matrix with:
 
 ``` r
 library(rcspline)
 library(ggplot2)
 
 p <- 100
-knots <- 5
+k <- 5
 
 m1 <- make_matrix(
   precision = p,
-  k = knots,
+  k = k,
   dimensions = 1
 )
 ```
 
 The matrix can then be used to generate non-linear reaction norms using
-vectors of length `k` with function `spline_1d()`:
+vectors of length `k` with function `nspline()`:
 
 ``` r
 set.seed(14232)
-vec <- rnorm(knots)
+vec <- rnorm(k)
 
-reac_norm <- spline_1d(vector = vec, matrix = m1)
+reac_norm <- nspline(vector = vec, matrix = m1, dimensions = 1, precision = p)
 
 plot_reac_norm <- data.frame(
   env = m1[, 2],
@@ -78,32 +98,30 @@ process. In this case, the required vector is of size `k^2`:
 ``` r
 m2 <- make_matrix(
   precision = p,
-  k = knots,
+  k = k,
   dimensions = 2
 )
 
 set.seed(12342)
-vec2 <- rnorm(knots^2)
+vec2 <- rnorm(k^2)
 
-reac_norm2 <- spline_2d(vector = vec2, matrix = m2)
+reac_norm2 <- nspline(vector = vec2, matrix = m2, dimensions = 2, precision = p)
 
 library(tidyverse)
 
 plot_reac_norm2 <-
   reac_norm2 %>%
   as_tibble() %>%
-  rownames_to_column("Var1") %>%
-  pivot_longer(-Var1, names_to = "Var2", values_to = "value") %>%
+  rownames_to_column("env1") %>%
+  pivot_longer(-env1, names_to = "env2", values_to = "pheno") %>%
   mutate(
-    Var1 = as.numeric(Var1),
-    Var2 = as.numeric(gsub("V", "", Var2))
+    env1 = as.numeric(env1),
+    env2 = as.numeric(gsub("V", "", env2))
   )
 
-ggplot(plot_reac_norm2, aes(Var1, Var2)) +
-  geom_tile(aes(fill = value)) +
+ggplot(plot_reac_norm2, aes(env1, env2)) +
+  geom_tile(aes(fill = pheno)) +
   scale_fill_gradient(low = "white", high = "red") +
-  xlab("Env 1") +
-  ylab("Env 2") +
   theme(axis.text.x = element_blank(), axis.text.y = element_blank())
 ```
 
