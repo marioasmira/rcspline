@@ -1,4 +1,5 @@
 #' Logistic function
+#'
 #' Transforms a real value, x, to be between 0 and carrying capacity, max. The
 #' growth rate, k, specifies the steepness of the slope. The inflection point,
 #' x_0, specifies the point where the function changes from exponential to

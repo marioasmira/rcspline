@@ -2,8 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{make_matrix}
 \alias{make_matrix}
-\title{A function to create an M matrix to help with
-restricted cubic spline calculations}
+\title{Makes matrices for reaction norm calculations}
 \usage{
 make_matrix(
   precision,
@@ -21,7 +20,7 @@ it will the be the number of rows in the output}
 
 \item{k}{the number of knots used}
 
-\item{dimensions}{the number of dimentions to create
+\item{dimensions}{the number of dimensions to create
 (this grows the size VERY fast)}
 
 \item{min}{the minimum value of the x values; default = 0}
@@ -35,11 +34,14 @@ default = 0.05}
 default = 0.95}
 }
 \value{
-a matrix of size precision by k
+A matrix of with \code{precision^dimension} rows and \code{k^dimensions} columns. With
+one dimension this is a simple matrix, but with higher dimensions this is
+a tensor product of the simple matrix.
 }
 \description{
-A function to create an M matrix to help with
-restricted cubic spline calculations
+A function to create an M matrix to help with further restricted cubic
+spline calculations using functions \code{\link[=nspline]{nspline()}}, \code{\link[=spline_1d]{spline_1d()}}, or
+\code{\link[=spline_2d]{spline_2d()}}.
 }
 \examples{
 make_matrix(1000, 5)

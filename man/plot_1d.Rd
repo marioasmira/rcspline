@@ -2,20 +2,23 @@
 % Please edit documentation in R/plots.R
 \name{plot_1d}
 \alias{plot_1d}
-\title{Plots one dimensions reaction norms}
+\title{Plots one dimensional reaction norms}
 \usage{
 plot_1d(matrix_m, reac_norm)
 }
 \arguments{
-\item{matrix_m}{Matrix used to calculate the reaction norm}
+\item{matrix_m}{Matrix used to calculate the reaction norm; made with
+\code{\link[=make_matrix]{make_matrix()}}}
 
-\item{reac_norm}{Reaction norm calculated with \code{nspline()} or \code{spline_1d()}}
+\item{reac_norm}{Reaction norm calculated with \code{\link[=nspline]{nspline()}} or \code{\link[=spline_1d]{spline_1d()}}}
 }
 \value{
-A \code{ggplot2} object to modify or plot directly
+A \code{ggplot2} object
 }
 \description{
-Plots one dimensions reaction norms
+Function takes a matrix made with \code{\link[=make_matrix]{make_matrix()}} and a reaction norm
+calculated with \code{\link[=nspline]{nspline()}} (or \code{\link[=spline_1d]{spline_1d()}}) and creates a \code{ggplot2}
+compatible plot.
 }
 \examples{
 # set parameters

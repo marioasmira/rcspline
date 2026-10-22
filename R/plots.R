@@ -1,9 +1,14 @@
-#' Plots one dimensions reaction norms
+#' Plots one dimensional reaction norms
 #'
-#' @param matrix_m Matrix used to calculate the reaction norm
-#' @param reac_norm Reaction norm calculated with `nspline()` or `spline_1d()`
+#' Function takes a matrix made with [make_matrix()] and a reaction norm
+#' calculated with [nspline()] (or [spline_1d()]) and creates a `ggplot2`
+#' compatible plot.
 #'
-#' @returns A `ggplot2` object to modify or plot directly
+#' @param matrix_m Matrix used to calculate the reaction norm; made with
+#' [make_matrix()]
+#' @param reac_norm Reaction norm calculated with [nspline()] or [spline_1d()]
+#'
+#' @returns A `ggplot2` object
 #' @import ggplot2
 #' @export
 #'
@@ -48,12 +53,17 @@ plot_1d <- function(
     ggplot2::geom_line()
 }
 
-#' Plots two dimensions reaction norms
+#' Plots two dimensional reaction norms
 #'
-#' @param matrix_m Matrix used to calculate the reaction norm
-#' @param reac_norm Reaction norm calculated with `nspline()` or `spline_1d()`
+#' Function takes a matrix made with [make_matrix()] and a reaction norm
+#' calculated with [nspline()] (or [spline_2d()]) and creates a `ggplot2`
+#' compatible plot.
 #'
-#' @returns A `ggplot2` object to modify or plot directly
+#' @param matrix_m Matrix used to calculate the reaction norm; made with
+#' [make_matrix()]
+#' @param reac_norm Reaction norm calculated with [nspline()] or [spline_2d()]
+#'
+#' @returns A `ggplot2` object
 #' @import ggplot2
 #' @import dplyr
 #' @importFrom tibble as_tibble rownames_to_column

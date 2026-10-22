@@ -2,31 +2,27 @@
 % Please edit documentation in R/RcppExports.R
 \name{basis}
 \alias{basis}
-\title{Basis function implemented from Harrell, F. (2001). Regression Modeling
-Strategies: With Applications to Linear Models, Logistic Regression, and
-Survival Analysis. Springer-Verlag.
-https://www.springer.com/gp/book/9781441929181
-Used internally and for tests.}
+\title{Calculates the non-linear part of the spline}
 \usage{
 basis(R_i, t, j)
 }
 \arguments{
-\item{R_i}{ith member of the precision vector (row)}
+\item{R_i}{\code{i}th member of the precision vector (row)}
 
 \item{t}{Knots vector}
 
 \item{j}{Position to calculate the basis starting at zero (column);
 different from the source implementation since here it varies between 2 and
-k, instead of between 1 and k-1}
+\code{k}, instead of between 1 and \code{k}-1}
 }
 \value{
 The calculated basis function for the provided member of the
-precision vector (R_i) and the specified column (j)
+precision vector (\code{R_i}) and the specified column (\code{j})
 }
 \description{
-Basis function implemented from Harrell, F. (2001). Regression Modeling
+Basis function implemented from 'Harrell, F. (2001). Regression Modeling
 Strategies: With Applications to Linear Models, Logistic Regression, and
 Survival Analysis. Springer-Verlag.
-https://www.springer.com/gp/book/9781441929181
+https://www.springer.com/gp/book/9781441929181'.
 Used internally and for tests.
 }

@@ -5,8 +5,10 @@ using namespace Rcpp;
 
 #include <algorithm>
 
-//' A function that takes a vector and compatible matrix and
-//' returns an `n` dimensional restricted cubic spline
+//' Calculates non-linear reaction norms
+//'
+//' A function that takes a vector and compatible matrix (from [make_matrix()])
+//' and returns an `n` dimensional restricted cubic spline
 //'
 //' @param vector A vector
 //' @param matrix The M matrix to calculate the restricted cubic spline;
@@ -20,7 +22,7 @@ using namespace Rcpp;
 //' precision <- 100
 //' k <- 5
 //' dimensions <- 2
-//' v <- rnorm(k^2)
+//' v <- rnorm(k^dimensions)
 //' M <- make_matrix(precision, k, dimensions)
 //' nspline(v, M, dimensions, precision)
 //' @export

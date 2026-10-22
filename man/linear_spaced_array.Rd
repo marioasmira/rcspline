@@ -2,9 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{linear_spaced_array}
 \alias{linear_spaced_array}
-\title{Function to make a vector of values with specific starting and ends points,
-and length. Behaviour in R should be similar to seq(). Used only in C++ code
-and package tests.}
+\title{Makes a sequence of evenly spaced values between two extremes}
 \usage{
 linear_spaced_array(a, b, k)
 }
@@ -16,12 +14,12 @@ linear_spaced_array(a, b, k)
 \item{k}{Length of the vector desired}
 }
 \value{
-A vector where the first and last members correspond to a and b,
+A vector where the first and last members correspond to \code{a} and \code{b},
 respectively, with other members evenly spaced between them and a length of
-k
+\code{k}.
 }
 \description{
 Function to make a vector of values with specific starting and ends points,
-and length. Behaviour in R should be similar to seq(). Used only in C++ code
+and length. Behaviour in R should be similar to \code{\link[base:seq]{base::seq()}}. Used only in C++ code
 and package tests.
 }

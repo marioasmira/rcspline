@@ -2,11 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{logis}
 \alias{logis}
-\title{Logistic function
-Transforms a real value, x, to be between 0 and carrying capacity, max. The
-growth rate, k, specifies the steepness of the slope. The inflection point,
-x_0, specifies the point where the function changes from exponential to
-logarithmic growth.}
+\title{Logistic function}
 \usage{
 logis(x, max = 1, k = 1, x_0 = 0)
 }
@@ -23,7 +19,6 @@ logis(x, max = 1, k = 1, x_0 = 0)
 Returns the transformed value of the input
 }
 \description{
-Logistic function
 Transforms a real value, x, to be between 0 and carrying capacity, max. The
 growth rate, k, specifies the steepness of the slope. The inflection point,
 x_0, specifies the point where the function changes from exponential to

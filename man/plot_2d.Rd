@@ -2,20 +2,23 @@
 % Please edit documentation in R/plots.R
 \name{plot_2d}
 \alias{plot_2d}
-\title{Plots two dimensions reaction norms}
+\title{Plots two dimensional reaction norms}
 \usage{
 plot_2d(matrix_m, reac_norm)
 }
 \arguments{
-\item{matrix_m}{Matrix used to calculate the reaction norm}
+\item{matrix_m}{Matrix used to calculate the reaction norm; made with
+\code{\link[=make_matrix]{make_matrix()}}}
 
-\item{reac_norm}{Reaction norm calculated with \code{nspline()} or \code{spline_1d()}}
+\item{reac_norm}{Reaction norm calculated with \code{\link[=nspline]{nspline()}} or \code{\link[=spline_2d]{spline_2d()}}}
 }
 \value{
-A \code{ggplot2} object to modify or plot directly
+A \code{ggplot2} object
 }
 \description{
-Plots two dimensions reaction norms
+Function takes a matrix made with \code{\link[=make_matrix]{make_matrix()}} and a reaction norm
+calculated with \code{\link[=nspline]{nspline()}} (or \code{\link[=spline_2d]{spline_2d()}}) and creates a \code{ggplot2}
+compatible plot.
 }
 \examples{
 # set parameters

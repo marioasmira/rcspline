@@ -2,8 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{spline_1d}
 \alias{spline_1d}
-\title{A function that takes a vector and compatible matrix and
-returns a restricted cubic spline}
+\title{Calculates one dimensional non-linear reaction norms}
 \usage{
 spline_1d(vector, matrix)
 }
@@ -18,8 +17,8 @@ Vector with the spline values; length is the same as the number
 of rows in matrix
 }
 \description{
-A function that takes a vector and compatible matrix and
-returns a restricted cubic spline
+A function that takes a vector and compatible matrix (from \code{\link[=make_matrix]{make_matrix()}})
+and returns a restricted cubic spline
 }
 \examples{
 v <- runif(5)
