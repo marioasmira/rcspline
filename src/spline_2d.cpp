@@ -5,8 +5,10 @@ using namespace Rcpp;
 
 #include <algorithm>
 
-//' A function that takes a vector and compatible matrix and
-//' returns a 2 dimensional restricted cubic spline
+//' Calculates two dimensional non-linear reaction norms
+//'
+//' A function that takes a vector and compatible matrix (from [make_matrix()])
+//' and returns a two dimensional restricted cubic spline
 //'
 //' @param vector A vector
 //' @param matrix The M matrix to calculate the restricted cubic spline;

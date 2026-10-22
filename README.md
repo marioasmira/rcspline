@@ -11,7 +11,7 @@ coverage](https://codecov.io/gh/marioasmira/rcspline/graph/badge.svg)](https://a
 
 <!-- badges: end -->
 
-A simple R package to calculate restricted cubic splines.
+A simple R package to calculate and work with restricted cubic splines.
 
 ## Installation
 
@@ -51,22 +51,24 @@ this matrix with a provided (or evolved) vector to calculate the
 reaction norm (*e.g.*,
 `nspline(vector = vec, matrix = m, dimensions = 1, precision = 100)`).
 
-## Example
+## Examples
+
+### One dimensional reaction norm
 
 For example, to generate a reaction norm with 5 knots (`k = 5`) and a
 precision of 100 (`p = 100`), we first generate a matrix with:
 
 ``` r
 library(rcspline)
-library(ggplot2)
 
 p <- 100
 k <- 5
+d <- 1
 
 m1 <- make_matrix(
   precision = p,
   k = k,
-  dimensions = 1
+  dimensions = d
 )
 ```
 
@@ -77,52 +79,99 @@ vectors of length `k` with function `nspline()`:
 set.seed(14232)
 vec <- rnorm(k)
 
-reac_norm <- nspline(vector = vec, matrix = m1, dimensions = 1, precision = p)
-
-plot_reac_norm <- data.frame(
-  env = m1[, 2],
-  pheno = reac_norm
-)
-ggplot(
-  data = plot_reac_norm,
-  aes(x = env, y = pheno)
-) +
-  geom_line()
+reac_norm <- nspline(vector = vec, matrix = m1, dimensions = d, precision = p)
 ```
 
-<img src="man/figures/README-norm-1.png" alt="" width="100%" />
+The `plot_1d()` function allows for simple plotting of the reaction norm
+which can be modified like other `ggplot2` plots:
+
+``` r
+library(ggplot2)
+plot_reac_norm <- plot_1d(m1, reac_norm)
+
+plot_reac_norm +
+  ggtitle("1D reaction norm") +
+  ylab("Phenotype") +
+  xlab("Environment")
+```
+
+<img src="man/figures/README-plot_1D-1.png" alt="" width="50%" />
+
+### Two dimensional reaction norm
 
 A reaction norm with two dimensions can be created with a similar
 process. In this case, the required vector is of size `k^2`:
 
 ``` r
+d <- 2
 m2 <- make_matrix(
   precision = p,
   k = k,
-  dimensions = 2
+  dimensions = d
 )
 
 set.seed(12342)
-vec2 <- rnorm(k^2)
+vec2 <- rnorm(k^d)
 
-reac_norm2 <- nspline(vector = vec2, matrix = m2, dimensions = 2, precision = p)
-
-library(tidyverse)
-
-plot_reac_norm2 <-
-  reac_norm2 %>%
-  as_tibble() %>%
-  rownames_to_column("env1") %>%
-  pivot_longer(-env1, names_to = "env2", values_to = "pheno") %>%
-  mutate(
-    env1 = as.numeric(env1),
-    env2 = as.numeric(gsub("V", "", env2))
-  )
-
-ggplot(plot_reac_norm2, aes(env1, env2)) +
-  geom_tile(aes(fill = pheno)) +
-  scale_fill_gradient(low = "white", high = "red") +
-  theme(axis.text.x = element_blank(), axis.text.y = element_blank())
+reac_norm2 <- nspline(vector = vec2, matrix = m2, dimensions = d, precision = p)
 ```
 
-<img src="man/figures/README-bivar-1.png" alt="" width="100%" />
+Which, like in the one dimensional example, can be plotted with
+`plot_2d()`:
+
+``` r
+plot_reac_norm2 <- plot_2d(m2, reac_norm2)
+
+plot_reac_norm2 +
+  ggtitle("2D reaction norm") +
+  ylab("Environment 2") +
+  xlab("Environment 1") +
+  labs(fill = "Phenotype")
+```
+
+<img src="man/figures/README-plot_2D-1.png" alt="" width="50%" />
+
+### Three dimensional reaction norm
+
+This package can help with three dimensional (and above) reaction norms,
+although the compute times and memory requirements increase quickly. An
+example of a three dimensional reaction norm:
+
+``` r
+d <- 3
+p3 <- 10 # notice the lower precision
+
+m3 <- make_matrix(
+  precision = p3,
+  k = k,
+  dimensions = d
+)
+
+set.seed(12342)
+vec3 <- rnorm(k^d)
+
+reac_norm3 <- nspline(vector = vec3, matrix = m3, dimensions = d, precision = p3)
+```
+
+Plotting a three dimensional object is complicated, but we can instead
+plot slices of `reac_norm3`. We generate a two dimensional matrix (with
+the same parameters) to help `plot_2d()`:
+
+``` r
+helper_d <- 2
+helper_m2 <- make_matrix(
+  precision = p3,
+  k = k,
+  dimensions = helper_d
+)
+
+plot_reac_norm3.1 <- plot_2d(helper_m2, reac_norm3[1, , ])
+
+plot_reac_norm3.1 +
+  ggtitle("Slice (1, , ) of 3D reaction norm") +
+  ylab("Environment 3") +
+  xlab("Environment 2") +
+  labs(fill = "Phenotype")
+```
+
+<img src="man/figures/README-not_plot_3D-1.png" alt="" width="50%" />

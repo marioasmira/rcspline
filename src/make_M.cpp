@@ -4,16 +4,18 @@ using Rcpp::NumericVector;
 using Rcpp::NumericMatrix;
 using Rcpp::stop;
 
+//' Makes a sequence of evenly spaced values between two extremes
+//'
 //' Function to make a vector of values with specific starting and ends points,
-//' and length. Behaviour in R should be similar to seq(). Used only in C++ code
+//' and length. Behaviour in R should be similar to [base::seq()]. Used only in C++ code
 //' and package tests.
 //'
 //' @param a Lowest value
 //' @param b Highest value
 //' @param k Length of the vector desired
-//' @return A vector where the first and last members correspond to a and b,
+//' @return A vector where the first and last members correspond to `a` and `b`,
 //' respectively, with other members evenly spaced between them and a length of
-//' k
+//' `k`.
 // [[Rcpp::export]]
 NumericVector linear_spaced_array(double a, double b, size_t k) {
   double h = (b - a) / (k - 1);
@@ -24,8 +26,10 @@ NumericVector linear_spaced_array(double a, double b, size_t k) {
   }
   return xs;
 }
+
 // cube expression
 double cubed(const double &exp) { return exp * exp * exp; }
+
 // calculate (x)+
 // return x if positive and 0 if negative
 template <typename T>
@@ -36,19 +40,21 @@ T min0(const T &u) {
     return 0.0;
 }
 
-//' Basis function implemented from Harrell, F. (2001). Regression Modeling
+//' Calculates the non-linear part of the spline
+//'
+//' Basis function implemented from 'Harrell, F. (2001). Regression Modeling
 //' Strategies: With Applications to Linear Models, Logistic Regression, and
 //' Survival Analysis. Springer-Verlag.
-//' https://www.springer.com/gp/book/9781441929181
+//' https://www.springer.com/gp/book/9781441929181'.
 //' Used internally and for tests.
 //'
-//' @param R_i ith member of the precision vector (row)
+//' @param R_i `i`th member of the precision vector (row)
 //' @param t Knots vector
 //' @param j Position to calculate the basis starting at zero (column);
 //' different from the source implementation since here it varies between 2 and
-//' k, instead of between 1 and k-1
+//' `k`, instead of between 1 and `k`-1
 //' @return The calculated basis function for the provided member of the
-//' precision vector (R_i) and the specified column (j)
+//' precision vector (`R_i`) and the specified column (`j`)
 // [[Rcpp::export]]
 double basis(const double &R_i, const NumericVector &t, const size_t &j) {
   const size_t k = t.length();
@@ -62,13 +68,16 @@ double basis(const double &R_i, const NumericVector &t, const size_t &j) {
   return calc;
 }
 
-//' A function to create an M matrix to help with
-//' restricted cubic spline calculations
+//' Makes matrices for reaction norm calculations
+//'
+//' A function to create an M matrix to help with further restricted cubic
+//' spline calculations using functions [nspline()], [spline_1d()], or
+//' [spline_2d()].
 //'
 //' @param precision how precise the calculation should be;
 //' it will the be the number of rows in the output
 //' @param k the number of knots used
-//' @param dimensions the number of dimentions to create
+//' @param dimensions the number of dimensions to create
 //' (this grows the size VERY fast)
 //' @param min the minimum value of the x values; default = 0
 //' @param max the maximum value of the x values; default = 1
@@ -76,7 +85,10 @@ double basis(const double &R_i, const NumericVector &t, const size_t &j) {
 //' default = 0.05
 //' @param last_knot position of the last knot as a fraction of max;
 //' default = 0.95
-//' @return a matrix of size precision by k
+//' @return
+//' A matrix of with `precision^dimension` rows and `k^dimensions` columns. With
+//' one dimension this is a simple matrix, but with higher dimensions this is
+//' a tensor product of the simple matrix.
 //' @examples
 //' make_matrix(1000, 5)
 //' @export
@@ -87,10 +99,15 @@ NumericMatrix make_matrix(const int &precision, const int &k,
                           const double &first_knot = 0.05,
                           const double &last_knot = 0.95) {
   // throw error if parameters are outside of scope
-  if ((precision < 1) || (k < 1) || (dimensions < 1)) {
+  if ((precision < 1) || (dimensions < 1)) {
     stop(
-        "Integer parameters (precision, k, and dimensions) should be greater "
+        "Integer parameters (precision and dimensions) should be greater "
         "than zero.");
+  }
+  // throw error if parameters are outside of scope
+  if (k < 2) {
+    stop(
+        "Number of knots should be above 1.");
   }
   // explicit cast into size_t if greater than zero
   const size_t s_precision = static_cast<size_t>(precision);

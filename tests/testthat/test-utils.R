@@ -49,3 +49,20 @@ test_that("confirm symmetry property when k is different from default", {
 test_that("confirm symmetry property is different when x_0 is different from default", {
   expect_equal(1 - logis(2 + 0.1, x_0 = 2), logis(2 - 0.1, x_0 = 2))
 })
+
+test_that("logit throws error on improper input", {
+  expect_error(logit(-3), "p should be above 0.", fixed = TRUE)
+  expect_error(logit(3), "p should be smaller than max (default: max = 1).", fixed = TRUE)
+  expect_error(logit(3, max = 3), "p should be smaller than max (default: max = 1).", fixed = TRUE)
+})
+
+test_that("logit inverses logis", {
+  expect_equal(logit(logis(1.43)), 1.43)
+  expect_equal(logit(logis(-0.43)), -0.43)
+  expect_equal(logit(logis(1.43, max = 5), max = 5), 1.43)
+  expect_equal(logit(logis(-0.43, max = 5), max = 5), -0.43)
+  expect_equal(logit(logis(1.43, k = 1.5), k = 1.5), 1.43)
+  expect_equal(logit(logis(-0.43, k = 1.5), k = 1.5), -0.43)
+  expect_equal(logit(logis(1.43, x_0 = 2), x_0 = 2), 1.43)
+  expect_equal(logit(logis(-0.43, x_0 = 2), x_0 = 2), -0.43)
+})

@@ -2,8 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{nspline}
 \alias{nspline}
-\title{A function that takes a vector and compatible matrix and
-returns an \code{n} dimensional restricted cubic spline}
+\title{Calculates non-linear reaction norms}
 \usage{
 nspline(vector, matrix, dimensions, precision)
 }
@@ -23,14 +22,14 @@ object is the same as the precision used to created the matrix; the
 dimensions of the object will be the same as the input
 }
 \description{
-A function that takes a vector and compatible matrix and
-returns an \code{n} dimensional restricted cubic spline
+A function that takes a vector and compatible matrix (from \code{\link[=make_matrix]{make_matrix()}})
+and returns an \code{n} dimensional restricted cubic spline
 }
 \examples{
 precision <- 100
 k <- 5
 dimensions <- 2
-v <- rnorm(k^2)
+v <- rnorm(k^dimensions)
 M <- make_matrix(precision, k, dimensions)
 nspline(v, M, dimensions, precision)
 }
