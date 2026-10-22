@@ -87,10 +87,15 @@ NumericMatrix make_matrix(const int &precision, const int &k,
                           const double &first_knot = 0.05,
                           const double &last_knot = 0.95) {
   // throw error if parameters are outside of scope
-  if ((precision < 1) || (k < 1) || (dimensions < 1)) {
+  if ((precision < 1) || (dimensions < 1)) {
     stop(
-        "Integer parameters (precision, k, and dimensions) should be greater "
+        "Integer parameters (precision and dimensions) should be greater "
         "than zero.");
+  }
+  // throw error if parameters are outside of scope
+  if (k < 2) {
+    stop(
+        "Number of knots should be above 1.");
   }
   // explicit cast into size_t if greater than zero
   const size_t s_precision = static_cast<size_t>(precision);

@@ -11,12 +11,15 @@ test_that("first two columns are intercept and linear term", {
 })
 
 test_that("undefined input parameters throw errors", {
-  expect_error(make_matrix(0, 5, 3), "Integer parameters (precision, k, and dimensions) should be greater than zero.", fixed = TRUE)
-  expect_error(make_matrix(10, 0, 3), "Integer parameters (precision, k, and dimensions) should be greater than zero.", fixed = TRUE)
-  expect_error(make_matrix(10, 5, 0), "Integer parameters (precision, k, and dimensions) should be greater than zero.", fixed = TRUE)
-  expect_error(make_matrix(-10, 5, 3), "Integer parameters (precision, k, and dimensions) should be greater than zero.", fixed = TRUE)
-  expect_error(make_matrix(10, -5, 3), "Integer parameters (precision, k, and dimensions) should be greater than zero.", fixed = TRUE)
-  expect_error(make_matrix(10, 5, -3), "Integer parameters (precision, k, and dimensions) should be greater than zero.", fixed = TRUE)
+  expect_error(make_matrix(0, 5, 3), "Integer parameters (precision and dimensions) should be greater than zero.", fixed = TRUE)
+  expect_error(make_matrix(10, 5, 0), "Integer parameters (precision and dimensions) should be greater than zero.", fixed = TRUE)
+  expect_error(make_matrix(-10, 5, 3), "Integer parameters (precision and dimensions) should be greater than zero.", fixed = TRUE)
+  expect_error(make_matrix(10, 5, -3), "Integer parameters (precision and dimensions) should be greater than zero.", fixed = TRUE)
+})
+
+test_that("number of knots lower than 2 throw errors", {
+  expect_error(make_matrix(10, 1, 3), "Number of knots should be above 1.", fixed = TRUE)
+  expect_error(make_matrix(10, -3, 3), "Number of knots should be above 1.", fixed = TRUE)
 })
 
 test_that("negative ranges throw errors", {
