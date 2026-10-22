@@ -19,8 +19,9 @@ logis(x, max = 1, k = 1, x_0 = 0)
 Returns the transformed value of the input
 }
 \description{
-Transforms a real value, x, to be between 0 and carrying capacity, max. The
-growth rate, k, specifies the steepness of the slope. The inflection point,
-x_0, specifies the point where the function changes from exponential to
-logarithmic growth.
+Transforms a real value, \code{x}, to be between 0 and carrying capacity, \code{max}.
+The growth rate, \code{k}, specifies the steepness of the slope. The inflection
+point, \code{x_0}, specifies the point where the function changes from exponential
+to logarithmic growth.
+Inverse of \code{\link[=logit]{logit()}}.
 }
