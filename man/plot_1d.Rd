@@ -4,10 +4,10 @@
 \alias{plot_1d}
 \title{Plots one dimensions reaction norms}
 \usage{
-plot_1d(matrix, reac_norm)
+plot_1d(matrix_m, reac_norm)
 }
 \arguments{
-\item{matrix}{Matrix used to calculate the reaction norm}
+\item{matrix_m}{Matrix used to calculate the reaction norm}
 
 \item{reac_norm}{Reaction norm calculated with \code{nspline()} or \code{spline_1d()}}
 }

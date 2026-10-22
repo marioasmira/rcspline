@@ -4,8 +4,15 @@ export(logis)
 export(make_matrix)
 export(nspline)
 export(plot_1d)
+export(plot_2d)
 export(spline_1d)
 export(spline_2d)
+import(dplyr)
 import(ggplot2)
 importFrom(Rcpp,sourceCpp)
+importFrom(tibble,
+  as_tibble,
+  rownames_to_column
+)
+importFrom(tidyr,pivot_longer)
 useDynLib(rcspline, .registration = TRUE)

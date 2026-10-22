@@ -10,8 +10,11 @@ License: MIT + file LICENSE
 URL: https://github.com/marioasmira/rcspline
 BugReports: https://github.com/marioasmira/rcspline/issues
 Imports:
+    dplyr,
     ggplot2,
-    Rcpp
+    Rcpp,
+    tibble,
+    tidyr
 Suggests: 
     testthat (>= 3.0.0)
 LinkingTo: 

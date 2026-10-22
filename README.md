@@ -51,7 +51,9 @@ this matrix with a provided (or evolved) vector to calculate the
 reaction norm (*e.g.*,
 `nspline(vector = vec, matrix = m, dimensions = 1, precision = 100)`).
 
-## Example
+## Examples
+
+### One dimensional reaction norm
 
 For example, to generate a reaction norm with 5 knots (`k = 5`) and a
 precision of 100 (`p = 100`), we first generate a matrix with:
@@ -94,6 +96,8 @@ plot_reac_norm +
 
 <img src="man/figures/README-plot_1D-1.png" alt="" width="100%" />
 
+### Two dimensional reaction norm
+
 A reaction norm with two dimensions can be created with a similar
 process. In this case, the required vector is of size `k^2`:
 
@@ -108,23 +112,61 @@ set.seed(12342)
 vec2 <- rnorm(k^2)
 
 reac_norm2 <- nspline(vector = vec2, matrix = m2, dimensions = 2, precision = p)
-
-library(tidyverse)
-
-plot_reac_norm2 <-
-  reac_norm2 %>%
-  as_tibble() %>%
-  rownames_to_column("env1") %>%
-  pivot_longer(-env1, names_to = "env2", values_to = "pheno") %>%
-  mutate(
-    env1 = as.numeric(env1),
-    env2 = as.numeric(gsub("V", "", env2))
-  )
-
-ggplot(plot_reac_norm2, aes(env1, env2)) +
-  geom_tile(aes(fill = pheno)) +
-  scale_fill_gradient(low = "white", high = "red") +
-  theme(axis.text.x = element_blank(), axis.text.y = element_blank())
 ```
 
-<img src="man/figures/README-bivar-1.png" alt="" width="100%" />
+Which, like in the one dimensional example, can be plotted with
+`plot_2d()`:
+
+``` r
+plot_reac_norm2 <- plot_2d(m2, reac_norm2)
+
+plot_reac_norm2 +
+  ggtitle("2D reaction norm") +
+  ylab("Environment 2") +
+  xlab("Environment 1") +
+  labs(fill = "Phenotype")
+```
+
+<img src="man/figures/README-plot_2D-1.png" alt="" width="100%" />
+
+### Three dimensional reaction norm
+
+This package can help with three dimensional (and above) reaction norms,
+although the compute times and memory requirements increase quickly. An
+example of a three dimensional reaction norm:
+
+``` r
+p3 <- 10 # notice the lower precision
+m3 <- make_matrix(
+  precision = p3,
+  k = k,
+  dimensions = 3
+)
+
+set.seed(12342)
+vec3 <- rnorm(k^3)
+
+reac_norm3 <- nspline(vector = vec3, matrix = m3, dimensions = 3, precision = p3)
+```
+
+Plotting a three dimensional object is complicated, but we can instead
+plot slices of `reac_norm3`. We generate a two dimensional matrix (with
+the same parameters) to help `plot_2d()`:
+
+``` r
+helper_m2 <- make_matrix(
+  precision = p3,
+  k = k,
+  dimensions = 2
+)
+
+plot_reac_norm3.1 <- plot_2d(helper_m2, reac_norm3[1, , ])
+
+plot_reac_norm3.1 +
+  ggtitle("Slice (1, , ) of 3D reaction norm") +
+  ylab("Environment 3") +
+  xlab("Environment 2") +
+  labs(fill = "Phenotype")
+```
+
+<img src="man/figures/README-not_plot_3D-1.png" alt="" width="100%" />
