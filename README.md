@@ -58,7 +58,6 @@ precision of 100 (`p = 100`), we first generate a matrix with:
 
 ``` r
 library(rcspline)
-library(ggplot2)
 
 p <- 100
 k <- 5
@@ -78,19 +77,22 @@ set.seed(14232)
 vec <- rnorm(k)
 
 reac_norm <- nspline(vector = vec, matrix = m1, dimensions = 1, precision = p)
-
-plot_reac_norm <- data.frame(
-  env = m1[, 2],
-  pheno = reac_norm
-)
-ggplot(
-  data = plot_reac_norm,
-  aes(x = env, y = pheno)
-) +
-  geom_line()
 ```
 
-<img src="man/figures/README-norm-1.png" alt="" width="100%" />
+The `plot_1d()` function allows for simple plotting of the reaction norm
+which can be modified like other `ggplot2` plots:
+
+``` r
+library(ggplot2)
+plot_reac_norm <- plot_1d(m1, reac_norm)
+
+plot_reac_norm +
+  ggtitle("1D reaction norm") +
+  ylab("Phenotype") +
+  xlab("Environment")
+```
+
+<img src="man/figures/README-plot_1D-1.png" alt="" width="100%" />
 
 A reaction norm with two dimensions can be created with a similar
 process. In this case, the required vector is of size `k^2`:
